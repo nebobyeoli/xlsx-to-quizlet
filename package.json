@@ -1,0 +1,15 @@
+{
+  "name": "xlsx-to-quizlet",
+  "version": "1.0.0",
+  "description": "Excel word file to Quizlet wordset",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NeboByeoli/xlsx-to-quizlet.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
