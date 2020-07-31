@@ -11,5 +11,8 @@
     "url": "https://github.com/NeboByeoli/xlsx-to-quizlet.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "xlsx": "^0.16.5"
+  }
 }
