@@ -3,6 +3,7 @@ const XLSX_input = document.getElementById('XLSX-input');
 
 if (indexHTML) {
 
+    // Get the files!
     XLSX_input.onchange = function(e) {
         // Check File API support
         if (window.File && window.FileList && window.FileReader) {
