@@ -9,3 +9,6 @@ getfilename-example.html
 
 # unused modules?
 dropzone-5.7.0
+
+# will not change
+.nojekyll
