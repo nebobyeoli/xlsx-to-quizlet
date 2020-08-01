@@ -1,3 +1,8 @@
 # ignore these files
 
+# ~xlsx file (unusable)
 ~$Day 15.xlsx
+
+# just examples from other
+filesize-example.html
+getfilename-example.html
