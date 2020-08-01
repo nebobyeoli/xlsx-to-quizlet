@@ -1,7 +1,7 @@
 //import * as XLSX from "./xlsx";
 //const XLSX = require('./xlsx.full.min.js');
 
-var wb = XLSX.readFile("./Day 15.xlsx");
+var wb = XLSX.readFile("Day 15.xlsx");
 var ws = wb.Sheets["Eng_meanings"];
 console.log(ws["A1"].v);
 
