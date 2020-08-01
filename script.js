@@ -3,7 +3,7 @@ const indexHTML = document.getElementById("index-html");
 if (indexHTML) {
 
     $(document).ready(function() {
-        $('input[type="file"]').change(function(e) {
+        $('input[id="XLSX-input"]').change(function(e) {
 
             var files = e.target.files, f = files[0];
             var reader = new FileReader();
