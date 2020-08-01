@@ -1,23 +1,40 @@
-const indexHTML = document.getElementById("index-html");
+const indexHTML = document.getElementById('index-html');
+const XLSX_input = document.getElementById('XLSX-input');
 
 if (indexHTML) {
 
-    $(document).ready(function() {
-        $('input[id="XLSX-input"]').change(function(e) {
+    XLSX_input.onchange = function(e) {
+        // Check File API support
+        if (window.File && window.FileList && window.FileReader) {
+            
+            const FILES = e.target.files;
+            let XLSXreader, workbook;
 
-            var files = e.target.files, f = files[0];
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var data = new Uint8Array(e.target.result);
+            writeme.innerHTML = 'First words:';
+            
+            for (let i = 0; i < FILES.length; i++) {
+                
+                // Only xlsx
+                if (!FILES[i].type.match('sheet')) {
+                    console.log('Only XLSXs allowed!');
+                    continue;
+                }
 
-                writeme.innerHTML = "file is uploaded, running";
-                var workbook = XLSX.read(data, {type: 'array'});
+                XLSXreader = new FileReader();
 
-                /* DO SOMETHING WITH workbook HERE */
-                writeme.innerHTML = workbook.Sheets["Eng_meanings"]["A1"].v;
-                console.log(workbook.Sheets["Eng_meanings"]["A1"].v);
-            };
-            reader.readAsArrayBuffer(f);
-        });
-    });
+                XLSXreader.onload = function(e) {
+                    // Set workbook
+                    workbook = XLSX.read(e.target.result, {type: 'array'});
+                    
+                    /* DO SOMETHING WITH workbook HERE */
+                    writeme.innerHTML += ' ' + workbook.Sheets['Eng_meanings']['A1'].v;
+                    console.log(workbook.Sheets['Eng_meanings']['A1'].v);
+                };
+                XLSXreader.readAsArrayBuffer(FILES[i]);
+            }
+        }
+        else {
+            console.log('Your browser does not support File API');
+        }
+    };
 }
