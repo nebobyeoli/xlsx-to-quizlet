@@ -4,14 +4,14 @@
 stubbed/
 
 # ~xlsx file (unusable)
-~$Day 15.xlsx
+## ~$Day 15.xlsx
 
 # just examples from other
-filesize-example.html
-getfilename-example.html
+## filesize-example.html
+## getfilename-example.html
 
 # unused modules?
-dropzone-5.7.0
+## dropzone-5.7.0
 
 # will not change
 .nojekyll
