@@ -15,3 +15,6 @@ stubbed/
 
 # will not change
 .nojekyll
+
+# temporary, like a notepad
+tempwriter.js
