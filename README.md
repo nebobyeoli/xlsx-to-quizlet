@@ -1,4 +1,4 @@
-# [xlsx-to-quizlet](https://nebobyeoli.github.io/xlsx-to-quizlet/)
+# [xlsx-to-quizlet](https://hearkour.github.io/xlsx-to-quizlet/)
 
 This is a tryout, I don't know much
 
