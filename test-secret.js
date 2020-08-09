@@ -1,5 +1,5 @@
 //import dotenv from 'dotenv';
-dotenv.config();
+DOTENV.config();
 /*
 require('dotenv').config();
 
