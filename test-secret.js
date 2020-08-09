@@ -1,4 +1,4 @@
-import * as wpconfig from './webpack.config'
+import * as wpconfig from '../xlsx-to-quizlet/webpack.config'
 /*
 import dotenv from 'dotenv';
 dotenv.config();
