@@ -19,7 +19,8 @@
     "build": "webpack --config webpack.config.js",
 
     "start-hot": "node server.js",
-    "start": "webpack-dev-server --content-base public/"
+    "start": "test_secret = ${{secrets.TEST_SECRET}}",
+    "__start": "webpack-dev-server --content-base public/"
   },
   "repository": {
     "type": "git",
