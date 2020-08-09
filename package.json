@@ -10,8 +10,13 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"TEST!\" && exit 1",
-    "build": "npm run webpack -- --mode development --watch",
-    "prod": "npm run webpack -- --mode production"
+    
+    "dev": "npm run webpack -- --mode development --watch",
+    "prod": "npm run webpack -- --mode production",
+    "build": "webpack --config webpack.config.js",
+
+    "start-hot": "node server.js",
+    "start": "webpack-dev-server --content-base public/"
   },
   "repository": {
     "type": "git",

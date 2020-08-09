@@ -30,6 +30,8 @@ jobs:
     - name: Build
       run: |
         npm install
+        npm install --save-dev webpack
+        npm install --save-dev webpack-cli
         npm run-script build
       env:
         CI: true
