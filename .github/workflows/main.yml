@@ -38,7 +38,7 @@ jobs:
         npm run-script build
         echo test_secret: ${#test_secret}
 
-#       https://stackoverflow.com/questions/59686823/how-can-i-use-github-secrets-in-js-files
+      # https://stackoverflow.com/questions/59686823/how-can-i-use-github-secrets-in-js-files
         mkdir env
         echo "export const environment = { firebase_api_key : '$1' }"  > env/env.ts
         sh setEnvironment.sh ${{ secrets.FIREBASE_API_KEY }}
