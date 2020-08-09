@@ -36,7 +36,7 @@ jobs:
         npm install --save-dev webpack
         npm install --save-dev webpack-cli
         npm run-script build
-        echo ${#test_secret}
+        echo test_secret: ${#test_secret}
 
 #   - name: Deploy
 #     uses: JamesIves/github-pages-deploy-action@releases/v3
