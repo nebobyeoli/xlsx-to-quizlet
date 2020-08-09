@@ -2,6 +2,8 @@
 
 This is a tryout, I don't know much
 
+### Running [test-secret.html](https://hearkour.github.io/xlsx-to-quizlet/test-secret.html)
+
 <details>
   <summary>Expand to show <b>Notes to SELF</b></summary>
 
