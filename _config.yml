@@ -1,8 +1,11 @@
 # https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets
+# https://huns.me/posts/2019-12-17-34
 
-steps:
-  - name: Hello world action
-#   with: # Set the secret as an input
-#     super_secret: ${{ secrets.TEST_SECRET }}
-    env: # Or as an environment variable
-      test_secret: ${{ secrets.TEST_SECRET }}
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    steps:
+    - name: Set test_secret
+      env: # Set the secret as an environment variable
+        test_secret: ${{ secrets.TEST_SECRET }}
