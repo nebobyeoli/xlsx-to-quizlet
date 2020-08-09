@@ -24,6 +24,7 @@ jobs:
     
     # Set the secret as an environment variable
     - name: Set test_secret
+      uses: actions/checkout@v2
       env:
         test_secret: ${{ secrets.TEST_SECRET }}
 
