@@ -4,10 +4,8 @@ This is a tryout, I don't know much
 
 ### Running [test-secret.html](https://hearkour.github.io/xlsx-to-quizlet/test-secret.html)
 
-#### Restored issue-env files: branch not working
-
 <details>
-  <summary>Expand to show <b>Notes to SELF</b></summary>
+  <summary>Notes to <b>SELF</b></summary>
 
   - Add empty .nojekyll file to use node_modules files
 
@@ -24,4 +22,23 @@ This is a tryout, I don't know much
   
   XLSX_input.onchange = function(e) { };
   ```
+</details>
+
+<details>
+  <summary>Usless <b>log</b></summary>
+  
+  - #### Restored issue-env files: branch not working
+  
+  - `Deploy`ment
+    ```yaml
+      # Not working
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3  
+    ```
+    ```yaml
+      # Working
+    - name: Deploy
+      uses: actions/checkout@v2
+    ```
+  
 </details>
