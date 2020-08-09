@@ -25,7 +25,7 @@ This is a tryout, I don't know much
 </details>
 
 <details>
-  <summary>Usless <b>log</b></summary>
+  <summary>Usless <b>l o g</b></summary>
   
   - #### Restored issue-env files: branch not working
   
