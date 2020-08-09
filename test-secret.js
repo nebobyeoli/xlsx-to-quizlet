@@ -1,4 +1,4 @@
-import * as wpconfig from 'webpack.config.js'
+import * as wpconfig from './webpack.config'
 /*
 import dotenv from 'dotenv';
 dotenv.config();
