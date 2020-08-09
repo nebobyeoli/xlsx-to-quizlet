@@ -16,11 +16,7 @@
     
     "dev": "npm run webpack -- --mode development --watch",
     "prod": "npm run webpack -- --mode production",
-    "build": "webpack --config webpack.config.js",
-
-    "start-hot": "node server.js",
-    "start": "test_secret = ${{secrets.TEST_SECRET}}",
-    "__start": "webpack-dev-server --content-base public/"
+    "build": "webpack --config webpack.config.js"
   },
   "repository": {
     "type": "git",
