@@ -7,6 +7,7 @@ stubbed/
 ## ~$Day 15.xlsx
 
 # just examples from other
+t/
 ## filesize-example.html
 ## getfilename-example.html
 
@@ -18,3 +19,8 @@ stubbed/
 
 # temporary, like a notepad
 tempwriter.js
+login-test.js
+
+# do not upload
+.env
+node_modules/
