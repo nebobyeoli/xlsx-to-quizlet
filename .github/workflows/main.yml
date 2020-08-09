@@ -31,7 +31,6 @@ jobs:
       run: |
         npm install
         npm run-script build
-        npm test
       env:
         CI: true
         test_secret: ${{ secrets.TEST_SECRET }}
