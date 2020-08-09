@@ -27,9 +27,13 @@ This is a tryout, I don't know much
 <details>
   <summary>Usless <b>l o g</b></summary>
   
-  - #### Restored issue-env files: branch not working
+  - Restored issue-env files: <b>branch not working</b>
   
-  - `Deploy`ment
+  - `❌ Uncaught ReferenceError: process is not defined ..`
+  
+    ~~Process is <b>NEVER</b> defined~~
+  
+  - `Deploy`ment:
     ```yaml
       # Not working
     - name: Deploy
