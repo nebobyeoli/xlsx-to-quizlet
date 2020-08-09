@@ -10,7 +10,9 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"TEST!\" && exit 1",
-    "build": "webpack"
+    "webpack" : "webpack",
+    "dev": "npm run webpack -- --mode development --watch",
+    "build": "npm run webpack -- --mode production"
   },
   "repository": {
     "type": "git",
