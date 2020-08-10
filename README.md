@@ -2,6 +2,8 @@
 
 This is a tryout, I don't know much
 
+### Running [login-test/login-test.html](https://hearkour.github.io/xlsx-to-quizlet/login-test/login-test.html)
+
 ### Running [test-secret.html](https://hearkour.github.io/xlsx-to-quizlet/test-secret.html)
 
 <details>
