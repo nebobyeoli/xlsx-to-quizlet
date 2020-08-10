@@ -19,8 +19,10 @@ t/
 
 # temporary, like a notepad
 tempwriter.js
-login-test.js
+# login-test.js
 
 # do not upload
 .env
 node_modules/
+AA/
+login-test/eg-quizlet.png
