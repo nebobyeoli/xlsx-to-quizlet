@@ -1,5 +1,5 @@
-const pptr = require('puppeteer');
-const ppt = require('puppeteer-core');
+// const pptr = require('puppeteer');
+// const ppt = require('puppeteer-core');
 
 const wsChromeEndpointUrl = 'ws://127.0.0.1:9222/devtools/browser/e9d2b88a-466e-4a0f-97ec-864ba7e92a6f';
 
@@ -12,7 +12,7 @@ const wsChromeEndpointUrl = 'ws://127.0.0.1:9222/devtools/browser/e9d2b88a-466e-
 //     console.log(await page.evaluate('navigator.userAgent'));
 // });
 
-pptr.connect({
+puppeteer.connect({
     browserWSEndpoint: wsChromeEndpointUrl,
     defaultViewport: null,
 }).then(async browser => {
