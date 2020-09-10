@@ -1,28 +1,8 @@
-# ignore these files
-
-# ignore everything
 stubbed/
-
-# ~xlsx file (unusable)
-## ~$Day 15.xlsx
-
-# just examples from other
-t/
-## filesize-example.html
-## getfilename-example.html
-
-# unused modules?
-## dropzone-5.7.0
-
-# will not change
-.nojekyll
-
-# temporary, like a notepad
-tempwriter.js
-# login-test.js
-
-# do not upload
-.env
 node_modules/
 AA/
 login-test/eg-quizlet.png
+# ~$Day 15.xlsx
+t/
+tempwriter.js
+# login-test.js
