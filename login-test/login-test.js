@@ -1,7 +1,7 @@
 // const pptr = require('puppeteer');
-// const ppt = require('puppeteer-core');
+const ppt = require('puppeteer-core');
 
-const wsChromeEndpointUrl = 'ws://127.0.0.1:9222/devtools/browser/e9d2b88a-466e-4a0f-97ec-864ba7e92a6f';
+const wsChromeEndpointUrl = 'ws://127.0.0.1:9222/devtools/browser/45ca84e5-a27b-49df-8cd9-b74d6f518ef3';
 
 // ppt.launch({
 //     executablePath: '"C:/Program Files (x86)/Google/Chrome/Application/chrome.exe" –remote-debugging-port=9222',
@@ -12,7 +12,7 @@ const wsChromeEndpointUrl = 'ws://127.0.0.1:9222/devtools/browser/e9d2b88a-466e-
 //     console.log(await page.evaluate('navigator.userAgent'));
 // });
 
-puppeteer.connect({
+ppt.connect({
     browserWSEndpoint: wsChromeEndpointUrl,
     defaultViewport: null,
 }).then(async browser => {
@@ -24,7 +24,7 @@ puppeteer.connect({
     const page = await browser.newPage();
 
     // await page.setViewport({width:1920, height:0});
-    await page.goto("https://quizlet.com/create-set", { waitUntil : "networkidle2" });
-
+    await page.goto("https://quizlet.com/create-set");
+    await page.screenshot('login-test/eg-quizlet.png');
     // await browser.close();
 });
