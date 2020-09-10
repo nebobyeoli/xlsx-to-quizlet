@@ -2,9 +2,7 @@
   "name": "xlsx-to-quizlet",
   "version": "1.0.0",
   "description": "This is a tryout, I don't know much",
-  "main": "script.js",
   "dependencies": {
-    "dotenv": "^8.2.0",
     "puppeteer": "^5.2.1"
   },
   "devDependencies": {
