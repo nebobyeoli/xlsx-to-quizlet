@@ -1,8 +1,6 @@
 stubbed/
 node_modules/
 AA/
-login-test/eg-quizlet.png
-# ~$Day 15.xlsx
+login-test/
 t/
 tempwriter.js
-# login-test.js
