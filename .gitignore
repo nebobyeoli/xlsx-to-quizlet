@@ -4,3 +4,9 @@ AA/
 login-test/
 t/
 tempwriter.js
+expl.txt
+*.xlsx
+*~.xlsx
+test*
+*.c
+*.exe
