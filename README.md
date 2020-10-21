@@ -1,10 +1,7 @@
-# [xlsx-to-quizlet](https://nebobyoli.github.io/xlsx-to-quizlet/)
+# [xlsx-to-quizlet](https://nebobyeoli.github.io/xlsx-to-quizlet/)
 
 This is a tryout, I don't know much
-
-### Running [login-test/login-test.html](https://hearkour.github.io/xlsx-to-quizlet/login-test/login-test.html)
-
-### Running [test-secret.html](https://hearkour.github.io/xlsx-to-quizlet/test-secret.html)
+Link above is just a reader - quizlet uploader is in a seperate folder
 
 <details>
   <summary>Notes to <b>SELF</b></summary>
@@ -27,7 +24,7 @@ This is a tryout, I don't know much
 </details>
 
 <details>
-  <summary>Usless <b>l o g</b></summary>
+  <summary>Usless <b>l o g</b> (old*)</summary>
   
   - Restored issue-env files: <b>branch not working</b>
   

@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "description": "This is a tryout, I don't know much",
   "dependencies": {
-    "puppeteer": "^5.2.1"
+    "puppeteer": "^5.3.1"
   },
   "devDependencies": {
-    "puppeteer-core": "^5.2.1"
+    "pkg": "^4.4.9"
   },
   "scripts": {
     "test": "echo TEST!",
-    "build": "node tools/build.js"
+    "build": "node tools/build.js",
+    "head": "node working/headless.js"
   },
   "repository": {
     "type": "git",
