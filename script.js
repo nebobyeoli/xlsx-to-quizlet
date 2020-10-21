@@ -23,7 +23,6 @@ if (indexHTML) {
                     continue;
                 }
 
-                // data.push({ name:  });
                 data.push({ name: FILES[i].name.slice(0, -5), words: [], defs: [] });
 
                 XLSXreader = new FileReader();
