@@ -1,4 +1,6 @@
 node_modules/
+.env
+*.env
 stubbed/
 AA/
 login-test/

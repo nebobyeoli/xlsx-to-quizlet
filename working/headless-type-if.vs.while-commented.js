@@ -1,8 +1,9 @@
-// Note: userid and password MUST BE MODIFIED on usage
+// Note: quizletusn and quizletpwd MUST BE REPLACED on usage
 
 const fs = require('fs');
-const path = require('path');
+// const path = require('path');
 const puppeteer = require('puppeteer');
+require('dotenv').config();
 
 function getChromePath() {
     let chromePath;
@@ -188,8 +189,8 @@ exports.run = async function () {
     }
     await page.click(query.openLogin);
 
-    await page.type(query.id, 'userid');
-    await page.type(query.pwd, 'password');
+    await page.type(query.id,   process.env.quizletusn);
+    await page.type(query.pwd,  process.env.quizletpwd);
 
     await page.click(query.login);
     await page.waitForNavigation({ waitUntil: 'networkidle2' });
