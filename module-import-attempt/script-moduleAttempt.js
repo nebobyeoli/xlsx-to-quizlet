@@ -1,5 +1,5 @@
-import { run } from '/working/headless.js';
-// const { run } = require('/working/headless.js');
+import { run } from '../working/headless.js';
+// const { run } = require('../working/headless.js');
 
 const indexHTML = document.getElementById('index-html');
 const XLSX_input = document.getElementById('XLSX-input');
@@ -12,10 +12,10 @@ if (indexHTML) {
     XLSX_input.onchange = function(e) {
         // Check File API support
         if (window.File && window.FileList && window.FileReader) {
-            
+
             const FILES = e.target.files;
             let XLSXreader, workbook;
-            
+
             for (let i = 0; i < FILES.length; i++) {
                 if (!FILES[i].type.match('sheet')) FILES.splice(i, 1);
             }
@@ -36,7 +36,7 @@ if (indexHTML) {
                 XLSXreader.onload = function(e) {
                     // Set workbook
                     workbook = XLSX.read(e.target.result, {type: 'array'});
-                    
+
                     // DO SOMETHING WITH workbook HERE
                     // Write in data arr
                     for (let j = 0; workbook.Sheets['Eng_meanings'][`A${j+1}`] != null; j++) {
