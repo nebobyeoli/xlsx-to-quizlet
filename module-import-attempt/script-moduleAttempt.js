@@ -1,3 +1,6 @@
+import { run } from '/working/headless.js';
+// const { run } = require('/working/headless.js');
+
 const indexHTML = document.getElementById('index-html');
 const XLSX_input = document.getElementById('XLSX-input');
 
@@ -5,19 +8,21 @@ const data = [];
 
 if (indexHTML) {
 
-    // get the files
-    XLSX_input.addEventListener('change', e => {
-        // check File API support
+    // Get the files!
+    XLSX_input.onchange = function(e) {
+        // Check File API support
         if (window.File && window.FileList && window.FileReader) {
-
+            
             const FILES = e.target.files;
             let XLSXreader, workbook;
-
-            console.log(typeof(FILES), FILES);
+            
+            for (let i = 0; i < FILES.length; i++) {
+                if (!FILES[i].type.match('sheet')) FILES.splice(i, 1);
+            }
 
             for (let i = 0; i < FILES.length; i++) {
-
-                // only xlsx
+                
+                // Only xlsx
                 if (!FILES[i].type.match('sheet')) {
                     console.log('Only XLSXs allowed!');
                     continue;
@@ -25,20 +30,20 @@ if (indexHTML) {
 
                 // data.push({ name:  });
                 data.push({ name: FILES[i].name.slice(0, -5), words: [], defs: [] });
-
+                
                 XLSXreader = new FileReader();
 
-                XLSXreader.addEventListener('load', e => {
-                    // set workbook
+                XLSXreader.onload = function(e) {
+                    // Set workbook
                     workbook = XLSX.read(e.target.result, {type: 'array'});
                     
-                    // DO SOMETHING WITH the workbook HERE
-                    // write in data arr
+                    // DO SOMETHING WITH workbook HERE
+                    // Write in data arr
                     for (let j = 0; workbook.Sheets['Eng_meanings'][`A${j+1}`] != null; j++) {
                         data[i].words.push(workbook.Sheets['Eng_meanings'][`A${j+1}`].v);
                         data[i].defs.push(workbook.Sheets['Eng_meanings'][`B${j+1}`].v);
                     }
-                });
+                };
                 XLSXreader.readAsArrayBuffer(FILES[i]);
             }
 
@@ -50,9 +55,10 @@ if (indexHTML) {
             }
 
             console.log(data);
+            run();
         }
         else {
             console.log('Your browser does not support File API');
         }
-    });
+    };
 }
