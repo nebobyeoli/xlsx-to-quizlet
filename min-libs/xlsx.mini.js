@@ -2016,7 +2016,7 @@ var consts = {
 function write_file(cfb, filename, options) {
 	get_fs();
 	var o = _write(cfb, options);
-fs.writeFileSync(filename, o);
+	fs.writeFileSync(filename, o);
 }
 
 function a2s(o) {
