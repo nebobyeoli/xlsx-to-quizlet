@@ -1,37 +1,46 @@
-# [xlsx-to-quizlet](https://nebobyeoli.github.io/xlsx-to-quizlet/)
+# [xlsx-to-quizlet](https://nebobyeoli.github.io/xlsx-to-quizlet/xlsx-mani)
 
 This is a tryout, I don't know much
 
 Link above is just a reader - quizlet uploader is in a seperate folder
 
+### Commit
+- Replaces terms in defs to underscores
+- File edit-download happens immediately-like after upload(s)
+- Download button is currently useless, will make use of it later
+
 <details>
-  <summary>Notes to <b>SELF</b></summary>
+  <summary>nothing</summary>
 
-  - Add empty .nojekyll file to use node_modules files
-
-  - These are the same:
+  - JS passes refs as refs, ref.properties as orig.properties
 
   ```javascript
-  // onload
-  XLSXreader.addEventListener('load', function(e) { });
-  XLSXreader.onload = function(e) { };
-  
-  // onchange
-  function handleFileSelect(e) { };
-  XLSX_input.addEventListener('change', handleFileSelect, false);
-  
-  XLSX_input.onchange = function(e) { };
+  let str = 'string';
+  const arr = [ 1, 2, 3 ];
+  const obj = { a: 10, b: 20, c: 30 };
+
+  let changeStr = str => str = 'edited-string';   // pass & access ref of variable
+  let changeArr = arr => arr[0] = 1000;           // pass ref of var, access property of ref
+  let changeObj = obj => obj.a = 0.001;           // pass ref of var, access property of ref
+
+  changeStr(str);
+  changeArr(arr);
+  changeObj(obj);
+
+  console.log('str:', str);   // output: str: string                      ref
+  console.log('arr:', arr);   // output: arr: [ 1000, 2, 3 ]              orig
+  console.log('obj:', obj);   // output: obj: { a: 0.001, b: 20, c: 30 }  orig
   ```
 </details>
 
 <details>
-  <summary>Usless <b>l o g</b> (old*)</summary>
+  <summary>logging the buggers</summary>
   
   - Restored issue-env files: <b>branch not working</b>
   
   - `❌ Uncaught ReferenceError: process is not defined ..`
   
-    ~~Process is <b>NEVER</b> defined~~
+    ~~Process is <b>*never*</b> defined~~
   
   - `Deploy`ment:
     ```yaml
