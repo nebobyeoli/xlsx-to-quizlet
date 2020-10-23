@@ -12,6 +12,8 @@ dist/
 # FileSaver.min.js
 min-libs/
 
+icon*/
+
 temp*
 test*
 
