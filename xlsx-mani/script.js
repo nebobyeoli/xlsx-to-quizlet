@@ -10,97 +10,94 @@ var data = [];
 var xlsxJoined = {};
 var xlsxAll  = [];
 
-if (indexHTML)
-{
-    indexHTML.onload = () => {
-        download_joined.innerHTML = 'download joined';
-        download_all.innerHTML = 'download all';
-    };
+indexHTML.onload = () => {
+    download_joined.innerHTML = 'download joined';
+    download_all.innerHTML = 'download all';
+};
 
-    /*** Output files: XLSX.writeFile creates a complete download file ***/
-    download_all.addEventListener('click', () => {
-        xlsxAll.forEach(wb => XLSX.writeFile(wb.file, wb.name));
-    });
+// Note.
+// Output files: XLSX.writeFile creates a complete download file
 
-    download_joined.addEventListener('click', () => {
-        XLSX.writeFile(xlsxJoined.file, xlsxJoined.name);
-    });
+download_all.addEventListener('click', () => {
+    xlsxAll.forEach(wb => XLSX.writeFile(wb.file, wb.name));
+});
 
-    XLSX_input.addEventListener('change', e =>
-    {
-        // check File API support
-        if (!window.File || !window.FileList || !window.FileReader) {
-            console.log('Your browser does not support File API');
-            return;
-        }
+download_joined.addEventListener('click', () => {
+    XLSX.writeFile(xlsxJoined.file, xlsxJoined.name);
+});
 
-        // SNAPSHOT of e.target.files
-        const FILES = e.target.files;
-
+XLSX_input.addEventListener('change', e => {
+    // check File API support
+    if (window.File && window.FileList && window.FileReader) {
         clearPrevious();
+        editInLoop_xlsxData(e.target.files); // IMPORTANT: FILES is passed as SNAPSHOT of e.target.files
+    }
+    else console.log('Your browser does not support File API');
+});
 
-        // will as function: editInLoop_xlsxData(FILES);
+function editInLoop_xlsxData(FILES)
+{
+    let wbBase = null;        // workbook base
+    let practicalEnd = false; // practical endpoint (e.g. when FILES[last] is a non-sheet)
 
-        let wbBase = null;        // workbook base
-        let practicalEnd = false; // practical endpoint (e.g. when FILES[last] is a non-sheet)
+    for (let i = 0; !practicalEnd && i < FILES.length; i++)
+    {
+        console.log(FILES[i].name);
 
-        for (let i = 0; !practicalEnd && i < FILES.length; i++)
-        {
-            console.log(FILES[i].name);
+        if (FILES[i].type.match('sheet')) addDataSpace(FILES, i);
 
-            if (FILES[i].type.match('sheet')) addDataSpace(FILES, i);
+        // single data arr item snapshot of current file
+        const dataNow = data[data.length - 1];
+        console.log('dataNow :', dataNow);
 
-            // single data arr item snapshot of current file
-            const dataNow = data[data.length - 1];
-            console.log('dataNow :', dataNow);
+        const fileReader = new FileReader();
+        fileReader.readAsArrayBuffer(FILES[i]);
 
-            const fileReader = new FileReader();
-            fileReader.readAsArrayBuffer(FILES[i]);
+        // 파일 로드: (거의 항상) 제일 나중에 실행됨
+        fileReader.addEventListener('load', e => {
+            const workbook = onLoadSinglefile(FILES[i], e, dataNow);
+            if   (workbook == null) return;
+            if   (wbBase   == null) wbBase = Object.assign({}, workbook);
+        });
 
-            // 파일 로드: (거의 항상) 제일 나중에 실행됨
-            fileReader.addEventListener('load', e => {
+        fileReader.addEventListener('loadend', () => {
+            practicalEnd = onLoadendfile(i, FILES, wbBase);
+        });
+    }
 
-                // will as function: onLoadSinglefile
+    // 여기에 코드가 있으면 fileReader.onload 전에 실행됨
+    // 따라서 이곳에 코드를 작성하는 것은 의미 없음.
+    // as well as spitting out unexpected behavior
+}
 
-                if (!FILES[i].type.match('sheet')) {
-                    console.log('Only XLSXs allowed! :', FILES[i].name);
-                    return;
-                }
+function onLoadSinglefile(FILE, e, dataNow)
+{
+    if (!FILE.type.match('sheet')) {
+        console.log('Only XLSXs allowed! :', FILE.name);
+        return null;
+    }
 
-                // DO SOMETHING WITH the workbook HERE
-                // write in data arr
+    // DO SOMETHING WITH the workbook HERE
+    // write in data arr
+    const workbook = XLSX.read(e.target.result, { type: 'array' });
 
-                const workbook = XLSX.read(e.target.result, {type: 'array'});
+    const korSh = workbook.Sheets['Kor_meanings']; // Kor worksheet
+    const engSh = workbook.Sheets['Eng_meanings']; // Eng worksheet
 
-                if (wbBase == null) wbBase = Object.assign({}, workbook);
-                console.log('wbBase\':', wbBase);
+    insertBlankDef(engSh, korSh, dataNow);
+    updateWorkbookStrings(dataNow, workbook);
+    setColsWidth(workbook, korSh, engSh);
 
-                const korSh = workbook.Sheets['Kor_meanings']; // Kor worksheet
-                const engSh = workbook.Sheets['Eng_meanings']; // Eng worksheet
+    // Store download file on xlsxAll arr
+    xlsxAll.push({ file: workbook, name: FILE.name });
 
-                insertBlankDef(engSh, korSh, dataNow);
-                updateWorkbookStrings(dataNow, workbook);
-                setColsWidth(workbook, korSh, engSh);
-
-                // Store download file on xlsxAll arr
-                xlsxAll.push({ file: workbook, name: FILES[i].name });
-
-                download_all.innerHTML += `<br>${FILES[i].name}`;
-            });
-
-            fileReader.addEventListener('loadend', () => {
-                practicalEnd = onLoadendfile(i, FILES, wbBase);
-            });
-        }
-
-        // 여기에 코드가 있으면 fileReader.onload 전에 실행됨
-        // 따라서 이곳에 코드를 작성하는 것은 의미 없음.
-        // as well as spitting out unexpected behavior
-    });
+    download_all.innerHTML += `<br>${FILE.name}`;
+    return workbook;
 }
 
 // Get full-joined single xlsx output file
-function getxlsxJoined(data, wbBase) {
+function getxlsxJoined(data, wbBase)
+{
     const dataStr = [];
     const dataSheet = {
         'Kor_meanings': { '!ref': null },
