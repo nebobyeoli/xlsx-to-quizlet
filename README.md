@@ -4,13 +4,28 @@ This is a tryout, I don't know much
 
 Link above is just a reader - quizlet uploader is in a seperate folder
 
-### Commit
+## Commit
+
+### Created terms-in-def plunger
+
 - Replaces terms in defs to underscores
 - File edit-download happens immediately-like after upload(s)
-- Download button is currently useless, will make use of it later
+
+### Added functionality: create a single, joined xlsx file
+
+- Single large function of XLSX_input onchange, commented to split into smaller functions
+- largely split, child goes as `getxlsxJoined`
++ decided to set names as `*~joined` than `\*~full` : possibility of latter being confused with `all`
+
+- Fixed issue spitters on receiving non-sheets as first/last files
+- unexpected behavior above were caused by inner onload event, which takes execution after a slight delay
+- buggers were buggy especially with wbBase
+
++ Need to fix: Created joinfile doesn't include all terms
++ Add this maybe: data.json structure example in README
 
 <details>
-  <summary>nothing</summary>
+  <summary>proper propriety proprietarietà</summary>
 
   - JS passes refs as refs, ref.properties as orig.properties
 
