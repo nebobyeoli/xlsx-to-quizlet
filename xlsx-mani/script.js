@@ -196,7 +196,7 @@ function rmWrapchar(str, wrapcharArr)
 function rmSheetwrap(sheetCell)
 {
     if (sheetCell) {
-        sheetCell.v = rmWrapchar(sheetCell.v, [' ', '　']).replaceAll(' ,', ',');
+        sheetCell.v = rmWrapchar(sheetCell.v, [' ', '　', ',']).replaceAll(' ,', ',');
         sheetCell.h = sheetCell.w = sheetCell.v;
         sheetCell.r = `<t>${sheetCell.v}</t>`;
         return sheetCell.v;
