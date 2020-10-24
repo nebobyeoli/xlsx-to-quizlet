@@ -44,6 +44,7 @@ if (indexHTML)
         xlsxAll    = [];
         download_all.innerHTML  = 'download all';
         download_joined.innerHTML = 'download joined';
+        console.clear();
 
         let wbBase = null;        // workbook base
         let practicalEnd = false; // practical endpoint (e.g. when FILES[last] is a non-sheet)
@@ -283,10 +284,10 @@ function getxlsxJoined(data, wbBase)
 
     /* Sheets.!cols */
     dataSheet['Kor_meanings']['!cols'] = [
-        { 'wch': 14.38 }, { 'wch': 49.38 }, { 'wch': 39.38 }
+        { 'wch': 14.38, 'wpx': 10 }, { 'wch': 49.38, 'wpx': 10 }, { 'wch': 39.38, 'wpx': 10 }
     ];
     dataSheet['Eng_meanings']['!cols'] = [
-        { 'wch': 14.38 }, { 'wch': 255 }
+        { 'wch': 14.38, 'wpx': 10 }, { 'wch': 255, 'wpx': 10 }
     ];
 
     dataSheet['Kor_meanings']['!ref'] = `A1:C${rows}`;
