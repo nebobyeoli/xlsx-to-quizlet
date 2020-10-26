@@ -2,7 +2,7 @@
 
 This is a tryout, I don't know much
 
-Link above is an xlsx editor - quizlet uploader is in a seperate folder
+<strong>Link above is an xlsx editor - quizlet uploader is in a seperate folder</strong>
 
 <details>
   <summary><b>Data arr example</b> (click to show)</summary><br>
@@ -545,7 +545,7 @@ Link above is an xlsx editor - quizlet uploader is in a seperate folder
 
 - Replaces terms in defs to underscores
 - File edit-download happens immediately-like after upload(s)
-- "뚫어뻥"
+- `뚫어뻥`
 
 ### Added functionality: create a single, joined xlsx file
 
