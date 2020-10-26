@@ -19,7 +19,7 @@ indexHTML.onload = () => {
 // Output files: XLSX.writeFile creates a complete download file
 
 download_all.addEventListener('click', () => {
-    xlsxAll.forEach(wb => {console.log('wb.file:', wb.file); XLSX.writeFile(wb.file, wb.name);});
+    xlsxAll.forEach(wb => XLSX.writeFile(wb.file, wb.name));
 });
 
 download_joined.addEventListener('click', () => {
@@ -56,7 +56,6 @@ function editInLoop_xlsxData(FILES)
         // 파일 로드: (거의 항상) 제일 나중에 실행됨
         fileReader.addEventListener('load', e => {
             const workbook = onLoadSinglefile(FILES[i], e, dataNow);
-            console.log(workbook)
             if   (workbook == null) return;
             if   (wbBase   == null) wbBase = Object.assign({}, workbook);
         });
@@ -81,6 +80,8 @@ function onLoadSinglefile(FILE, e, dataNow)
     // DO SOMETHING WITH the workbook HERE
     // write in data arr
     const workbook = XLSX.read(e.target.result, { type: 'array' });
+    console.log('original workbook:', workbook);
+    removeNbsp(workbook);
 
     const korSh = workbook.Sheets['Kor_meanings']; // Kor worksheet
     const engSh = workbook.Sheets['Eng_meanings']; // Eng worksheet
@@ -90,7 +91,7 @@ function onLoadSinglefile(FILE, e, dataNow)
     setColsWidth         (workbook, korSh, engSh);
 
     // Store download file on xlsxAll arr
-    console.log('workbook:', workbook)
+    console.log('edited workbook:', workbook)
     xlsxAll.push({ file: workbook, name: FILE.name });
 
     download_all.innerHTML += `<br>${FILE.name}`;
@@ -125,7 +126,7 @@ function getxlsxJoined(data, wbBase)
     add_margins_cols(dataSheet);
 
     /* Sheets.!ref */
-    dataSheet['Kor_meanings']['!ref'] =// `A1:B${rows}`;
+    dataSheet['Kor_meanings']['!ref'] =
     dataSheet['Eng_meanings']['!ref'] = `A1:B${rows}`;
 
     // Append dataSheet
@@ -146,14 +147,31 @@ function addDataSpace(FILES, i) {
     });
 }
 
+// Replace every occuring \xa0 in a workbook to normal space
+function removeNbsp(workbook) {
+    for (const sheet_key in workbook.Sheets) {
+        const sheet = workbook.Sheets[sheet_key];
+
+        for (const cell_key in sheet) {
+            const cell = sheet[cell_key];
+
+            // if type of sheet[cell_key] data == string
+            if (cell.t == 's') {
+                // Replace all non-breaking spaces
+                cell.v = cell.v.replaceAll('\xa0', ' ');
+                cell.h = cell.w = cell.v;
+                cell.r = `<t>${cell.v}</t>`;
+            }
+        }
+    }
+}
+
 // Replace terms in each def with BLANK
 function insertBlankDef(dataNow, korSh, engSh)
 {
     // default: terms are stored on column A
     let colChars = ['A', 'B', 'C'];
     let rowStart = 1;
-
-    console.log(`korSh['A1']`, korSh['A1']==null)
 
     // if terms are stored on column C
     if (korSh['A1'] == null) {
@@ -168,8 +186,6 @@ function insertBlankDef(dataNow, korSh, engSh)
         let korDef2 = korSh[`${colChars[2]}${rowStart + j}`];
         let engTerm = engSh[`${colChars[0]}${rowStart + j}`];
         let engDef  = engSh[`${colChars[1]}${rowStart + j}`];
-
-        console.log(`aa ${colChars[0]}${rowStart + j}`, engTerm.v)
 
         // regex flag: g = global, i = case-insensitive
         engDef .v = engDef.v.replaceAll(RegExp(engTerm.v, 'gi'), BLANK);
@@ -245,9 +261,8 @@ function updateWorkbookStrings(workbook, dataNow) {
     workbook.Strings = [];
 
     for (let i = 0; i < dataNow.terms.length; i++) {
-        let term   = dataNow.terms     [i];
-        let korDef = dataNow.korDefs  [i];
-        // let korDef2 = dataNow.korDefs2  [i];
+        let term   = dataNow.terms   [i];
+        let korDef = dataNow.korDefs [i];
         workbook.Strings.push               ({ t: term,   r: `<t>${term  }</t>`, h: term    });
         workbook.Strings.push               ({ t: korDef, r: `<t>${korDef}</t>`, h: korDef  });
     }
@@ -290,11 +305,15 @@ function rmWrapchar(str, wrapcharArr) {
 // langsheetCell: like korSh['A' + j], korSh['B' + j], engSh['B' + j]
 function rmSheetwrap(sheetCell) {
     if (sheetCell) {
-        sheetCell.v = rmWrapchar(sheetCell.v, [' ', '　', ',']).replaceAll(' ,', ',');
+        sheetCell.v = sheetCell.v.replaceAll(' ,', ',');
+
+        sheetCell.v = rmWrapchar(sheetCell.v, [' ', '　', ',']);
         sheetCell.h = sheetCell.w = sheetCell.v;
         sheetCell.r = `<t>${sheetCell.v}</t>`;
+
         return sheetCell.v;
     }
+
     else return null;
 }
 

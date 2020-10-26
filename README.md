@@ -701,17 +701,20 @@ Link above is an xlsx editor - quizlet uploader is in a seperate folder
   ```
 </details>
 
+### To-dos
+
+- Add xlsx styling
+- Need to improve method of finding the first cell position of terms
++ Add this maybe: Search for term in def where word matches to nth character of word
+
 ## Commits
 
-### Created terms-in-def plunger
+### Created terms-in-def plunger "뚫어뻥"
 
 - Replaces terms in defs to underscores
 - File edit-download happens immediately-like after upload(s)
 
 ### Added functionality: create a single, joined xlsx file
-
-- Single large function of XLSX_input onchange, commented to split into smaller functions
-- largely split, child goes as `getxlsxJoined`
 
 - Fixed issues on receiving non-sheets as first/last files
 - Cause of non-sheets unexpected behavior: Inner onload event takes execution after a slight delay
@@ -719,10 +722,11 @@ Link above is an xlsx editor - quizlet uploader is in a seperate folder
 ### Added support on new xlsx format [still no-style]
 
 - Which terms are stored on column C than A
-- Though output file still lacks style
+- Although, output file still lacks style
 
-+ Need to edit function rmWrapchar to repeat until complete !wrapchar
-+ Add this maybe: Search for term in def where word matches until nth character of word
+### Added auto nbsp replacement
+
+- Replaces every occuring non-breaking line space to a normal space
 
 <details>
   <summary>proper propriety proprietarietà</summary>
@@ -730,7 +734,7 @@ Link above is an xlsx editor - quizlet uploader is in a seperate folder
   - JS passes refs as refs, ref.properties as orig.properties
 
   ```javascript
-  let str = 'string';
+  let str   = 'string';
   const arr = [ 1, 2, 3 ];
   const obj = { a: 10, b: 20, c: 30 };
 
