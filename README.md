@@ -1,8 +1,8 @@
-# [xlsx-to-quizlet](https://nebobyeoli.github.io/xlsx-to-quizlet/xlsx-mani)
+# [xlsx-to-quizlet](https://nebobyeoli.github.io/xlsx-to-quizlet)
 
 This is a tryout, I don't know much
 
-Link above is just a reader - quizlet uploader is in a seperate folder
+Link above is an xlsx editor - quizlet uploader is in a seperate folder
 
 <details>
   <summary><b>Data arr example</b> (click to show)</summary><br>

@@ -1,25 +1,18 @@
 node_modules/
-.env
-*.env
-stubbed/
-AA/
-login-test/
-t/
 .vscode/
-dist/
-
-# require.js
-# FileSaver.min.js
 min-libs/
 
+root*/
 icon*/
 
+*demo*/
 temp*
+*test*/
 test*
 
+*.env
 *.txt
 *.xlsx
-*~.xlsx
 *.c
 *.exe
 *-linux
