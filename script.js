@@ -19,7 +19,7 @@ indexHTML.onload = () => {
 // Output files: XLSX.writeFile creates a complete download file
 
 download_all.addEventListener('click', () => {
-    xlsxAll.forEach(wb => XLSX.writeFile(wb.file, wb.name));
+    xlsxAll.forEach(wb => {console.log('wb.file:', wb.file); XLSX.writeFile(wb.file, wb.name);});
 });
 
 download_joined.addEventListener('click', () => {
@@ -56,6 +56,7 @@ function editInLoop_xlsxData(FILES)
         // 파일 로드: (거의 항상) 제일 나중에 실행됨
         fileReader.addEventListener('load', e => {
             const workbook = onLoadSinglefile(FILES[i], e, dataNow);
+            console.log(workbook)
             if   (workbook == null) return;
             if   (wbBase   == null) wbBase = Object.assign({}, workbook);
         });
@@ -84,11 +85,12 @@ function onLoadSinglefile(FILE, e, dataNow)
     const korSh = workbook.Sheets['Kor_meanings']; // Kor worksheet
     const engSh = workbook.Sheets['Eng_meanings']; // Eng worksheet
 
-    insertBlankDef(engSh, korSh, dataNow);
-    updateWorkbookStrings(dataNow, workbook);
-    setColsWidth(workbook, korSh, engSh);
+    insertBlankDef       (dataNow,  korSh, engSh);
+    updateWorkbookStrings(workbook, dataNow);
+    setColsWidth         (workbook, korSh, engSh);
 
     // Store download file on xlsxAll arr
+    console.log('workbook:', workbook)
     xlsxAll.push({ file: workbook, name: FILE.name });
 
     download_all.innerHTML += `<br>${FILE.name}`;
@@ -123,7 +125,7 @@ function getxlsxJoined(data, wbBase)
     add_margins_cols(dataSheet);
 
     /* Sheets.!ref */
-    dataSheet['Kor_meanings']['!ref'] = `A1:C${rows}`;
+    dataSheet['Kor_meanings']['!ref'] =// `A1:B${rows}`;
     dataSheet['Eng_meanings']['!ref'] = `A1:B${rows}`;
 
     // Append dataSheet
@@ -134,37 +136,53 @@ function getxlsxJoined(data, wbBase)
     return { file: wbBase, name: `${fileName.slice(0, -2)}.xlsx` };
 }
 
+// Push new saveSpace in data arr
 function addDataSpace(FILES, i) {
     data.push({
         name: FILES[i].name.slice(0, -5),
-        terms: [],
-        korDefs1: [],
-        korDefs2: [],
+        terms:   [],
+        korDefs: [],
         engDefs: []
     });
 }
 
 // Replace terms in each def with BLANK
-function insertBlankDef(engSh, korSh, dataNow) {
-    for (let j = 1; engSh['A' + j] != null; j++)
+function insertBlankDef(dataNow, korSh, engSh)
+{
+    // default: terms are stored on column A
+    let colChars = ['A', 'B', 'C'];
+    let rowStart = 1;
+
+    console.log(`korSh['A1']`, korSh['A1']==null)
+
+    // if terms are stored on column C
+    if (korSh['A1'] == null) {
+        colChars = ['C', 'D', 'E'];
+        rowStart = 3;
+    }
+
+    for (let j = 0; engSh[`${colChars[0]}${rowStart + j}`] != null; j++)
     {
-        let korTerm, korDef1, korDef2;
-        let engTerm = engSh['A' + j].v;
-        let engDef = engSh['B' + j].v;
+        let korTerm = korSh[`${colChars[0]}${rowStart + j}`];
+        let korDef  = korSh[`${colChars[1]}${rowStart + j}`];
+        let korDef2 = korSh[`${colChars[2]}${rowStart + j}`];
+        let engTerm = engSh[`${colChars[0]}${rowStart + j}`];
+        let engDef  = engSh[`${colChars[1]}${rowStart + j}`];
+
+        console.log(`aa ${colChars[0]}${rowStart + j}`, engTerm.v)
 
         // regex flag: g = global, i = case-insensitive
-        engSh['B' + j].v = engDef.replaceAll(RegExp(engTerm, 'gi'), BLANK);
+        engDef .v = engDef.v.replaceAll(RegExp(engTerm.v, 'gi'), BLANK);
 
-        korTerm = rmSheetwrap(korSh['A' + j]);
-        korDef1 = rmSheetwrap(korSh['B' + j]);
-        korDef2 = rmSheetwrap(korSh['C' + j]);
-        engTerm = rmSheetwrap(engSh['A' + j]);
-        engDef = rmSheetwrap(engSh['B' + j]);
+        korTerm.v = rmSheetwrap(korTerm);
+        korDef .v = rmSheetwrap(korDef);
+        if (korDef2) korDef.v += `, ${rmSheetwrap(korDef2)}`;
+        engTerm.v = rmSheetwrap(engTerm);
+        engDef .v = rmSheetwrap(engDef);
 
-        dataNow.terms.push(engTerm);
-        dataNow.korDefs1.push(korDef1);
-        dataNow.korDefs2.push(korDef2);
-        dataNow.engDefs.push(engDef);
+        dataNow.terms  .push(engTerm.v);
+        dataNow.korDefs.push(korDef.v);
+        dataNow.engDefs.push(engDef.v);
     }
 }
 
@@ -184,45 +202,66 @@ function onLoadendfile(i, FILES, wbBase) {
 
 // Set colummn width
 function setColsWidth(workbook, korSh, engSh) {
-    workbook.Sheets['Kor_meanings'] = Object.assign(korSh, {
-        '!cols': [
-            { wch: 14.38 },
-            { wch: 49.38 },
-            { wch: 39.38 }
-        ]
-    });
+    if (korSh['A1']) {
+        workbook.Sheets['Kor_meanings'] = Object.assign(korSh, {
+            '!cols': [
+                { wch: 16  },
+                { wch: 50  },
+                { wch: 40  }
+            ]
+        });
 
-    workbook.Sheets['Eng_meanings'] = Object.assign(engSh, {
-        '!cols': [
-            { wch: 14.38 },
-            { wch: 255 }
-        ]
-    });
+        workbook.Sheets['Eng_meanings'] = Object.assign(engSh, {
+            '!cols': [
+                { wch: 16  },
+                { wch: 200 }
+            ]
+        });
+    }
+
+    else {
+        workbook.Sheets['Kor_meanings'] = Object.assign(korSh, {
+            '!cols': [
+                { wch: 2   },
+                { wch: 8   },
+                { wch: 16  },
+                { wch: 50  }
+            ]
+        });
+
+        workbook.Sheets['Eng_meanings'] = Object.assign(engSh, {
+            '!cols': [
+                { wch: 2   },
+                { wch: 8   },
+                { wch: 16  },
+                { wch: 200 }
+            ]
+        });
+    }
 }
 
 // Apply on workbook Strings
-function updateWorkbookStrings(dataNow, workbook) {
+function updateWorkbookStrings(workbook, dataNow) {
     workbook.Strings = [];
 
     for (let i = 0; i < dataNow.terms.length; i++) {
-        let term    = dataNow.terms     [i];
-        let korDef1 = dataNow.korDefs1  [i];
-        let korDef2 = dataNow.korDefs2  [i];
-        workbook.Strings.push               ({ t: term,     r: `<t>${term   }</t>`, h: term     });
-        workbook.Strings.push               ({ t: korDef1,  r: `<t>${korDef1}</t>`, h: korDef1  });
-        if (korDef2) workbook.Strings.push  ({ t: korDef2,  r: `<t>${korDef2}</t>`, h: korDef2  });
+        let term   = dataNow.terms     [i];
+        let korDef = dataNow.korDefs  [i];
+        // let korDef2 = dataNow.korDefs2  [i];
+        workbook.Strings.push               ({ t: term,   r: `<t>${term  }</t>`, h: term    });
+        workbook.Strings.push               ({ t: korDef, r: `<t>${korDef}</t>`, h: korDef  });
     }
 
     dataNow.engDefs.forEach(engDef => {
-        workbook.Strings.push               ({ t: engDef,   r: `<t>${engDef}</t>`,  h: engDef   });
+        workbook.Strings.push               ({ t: engDef, r: `<t>${engDef}</t>`, h: engDef  });
     });
 }
 
 // Empty previous results
 function clearPrevious() {
-    data = [];
+    data       = [];
     xlsxJoined = {};
-    xlsxAll = [];
+    xlsxAll    = [];
     download_all.innerHTML    = 'download all';
     download_joined.innerHTML = 'download joined';
     console.clear();
@@ -260,11 +299,10 @@ function rmSheetwrap(sheetCell) {
 }
 
 function set_Sheets(Day_N, n, i, dataSheet) {
-    let row = (n * 40) + (i + 1);
-    let term    = Day_N.terms[i];
-    let korDef1 = Day_N.korDefs1[i];
-    let korDef2 = Day_N.korDefs2[i];
-    let engDef  = Day_N.engDefs[i];
+    let row    = (n * 40) + (i + 1);
+    let term   = Day_N.terms[i];
+    let korDef = Day_N.korDefs[i];
+    let engDef = Day_N.engDefs[i];
 
     /* Sheets */
     dataSheet['Kor_meanings'][`A${row}`] =
@@ -275,11 +313,7 @@ function set_Sheets(Day_N, n, i, dataSheet) {
 
     dataSheet['Kor_meanings'][`B${row}`] = {
         't': 's',
-        'v': korDef1, 'h': korDef1, 'w': korDef1, 'r': `<t>${korDef1}</t>`
-    };
-    if (korDef2) dataSheet['Kor_meanings'][`C${row}`] = {
-        't': 's',
-        'v': korDef2, 'h': korDef2, 'w': korDef2, 'r': `<t>${korDef2}</t>`
+        'v': korDef, 'h': korDef, 'w': korDef, 'r': `<t>${korDef}</t>`
     };
 
     dataSheet['Eng_meanings'][`B${row}`] = {
@@ -289,16 +323,14 @@ function set_Sheets(Day_N, n, i, dataSheet) {
 }
 
 function set_Strings(Day_N, i, dataStr) {
-    let term    = Day_N.terms[i];
-    let korDef1 = Day_N.korDefs1[i];
-    let korDef2 = Day_N.korDefs2[i];
-    let engDef  = Day_N.engDefs[i];
+    let term   = Day_N.terms[i];
+    let korDef = Day_N.korDefs[i];
+    let engDef = Day_N.engDefs[i];
 
     /* Strings */
-    dataStr.push                ({ t: term,    r: `<t>${term}</t>`,    h: term    });
-    dataStr.push                ({ t: korDef1, r: `<t>${korDef1}</t>`, h: korDef1 });
-    if (korDef2) dataStr.push   ({ t: korDef2, r: `<t>${korDef2}</t>`, h: korDef2 });
-    dataStr.push                ({ t: engDef,  r: `<t>${engDef}</t>`,  h: engDef  });
+    dataStr.push                ({ t: term,   r: `<t>${term}</t>`,   h: term   });
+    dataStr.push                ({ t: korDef, r: `<t>${korDef}</t>`, h: korDef });
+    dataStr.push                ({ t: engDef, r: `<t>${engDef}</t>`, h: engDef });
 }
 
 function add_margins_cols(dataSheet) {

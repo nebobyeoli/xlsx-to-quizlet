@@ -701,7 +701,7 @@ Link above is an xlsx editor - quizlet uploader is in a seperate folder
   ```
 </details>
 
-## Commit
+## Commits
 
 ### Created terms-in-def plunger
 
@@ -712,14 +712,17 @@ Link above is an xlsx editor - quizlet uploader is in a seperate folder
 
 - Single large function of XLSX_input onchange, commented to split into smaller functions
 - largely split, child goes as `getxlsxJoined`
-+ decided to set names as `*~joined` than `\*~full` : possibility of latter being confused with `all`
 
-- Fixed issue spitters on receiving non-sheets as first/last files
-- unexpected behavior above were caused by inner onload event, which takes execution after a slight delay
-- buggers were buggy especially with wbBase
+- Fixed issues on receiving non-sheets as first/last files
+- Cause of non-sheets unexpected behavior: Inner onload event takes execution after a slight delay
 
-+ Need to fix: Created joinfile doesn't include all terms
-+ Add this maybe: data.json structure example in README
+### Added support on new xlsx format [still no-style]
+
+- Which terms are stored on column C than A
+- Though output file still lacks style
+
++ Need to edit function rmWrapchar to repeat until complete !wrapchar
++ Add this maybe: Search for term in def where word matches until nth character of word
 
 <details>
   <summary>proper propriety proprietarietà</summary>
