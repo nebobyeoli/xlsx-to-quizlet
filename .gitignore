@@ -3,7 +3,7 @@ node_modules/
 min-libs/
 
 root*/
-icon*/
+orig*/
 
 *demo*/
 temp*
