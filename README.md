@@ -4,6 +4,13 @@ This is a tryout, I don't know much
 
 <strong>Link above is an xlsx editor - quizlet uploader is in a seperate folder</strong>
 
+```
+Replace terms in defs to underscores
+
+Look at the console
+File edit-download happens immediately-like after upload(s)
+```
+
 <details>
   <summary><b>Data arr example</b> (click to show)</summary><br>
   
