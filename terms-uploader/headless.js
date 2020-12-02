@@ -13,6 +13,7 @@ function getChromePath() {
 }
 
 function rmChromeData(maxRetries, retryDelay, timeout, exitonCompletion) {
+    
     console.log('removing chromeData temp folder...');
 
     fs.rmdir('chromeData', {
@@ -29,6 +30,9 @@ function rmChromeData(maxRetries, retryDelay, timeout, exitonCompletion) {
     setTimeout(() => { console.log('remove failed'); process.exit(); }, timeout);
 }
 
+// unused: default puppeteer.launch(without options)
+// is a perfect headless...?
+// better performance results than using the options below?
 function getHeadlessOptions() {
     return {
         executablePath: getChromePath(),
@@ -144,7 +148,7 @@ async function shoo(page) {
     while (shooed != null) {
         console.log('shoo!');
         page.$(query.seller).then(n => shooed = n);
-        await aSleep(500);
+        await aSleep(500); // wait for modal extinguish
     }
 }
 
@@ -191,7 +195,8 @@ async function replaceTxtValue(page, newValue) {
 
 exports.run = async function () {
     
-    const browser = await puppeteer.launch(getHeadlessOptions());
+    // const browser = await puppeteer.launch(getHeadlessOptions());
+    const browser = await puppeteer.launch();
     const [page] = await browser.pages();
 
     try {
@@ -203,7 +208,8 @@ exports.run = async function () {
 
         try {
             await page.waitForSelector(query.openLogin, { timeout: 800 });
-        } catch {
+        }
+        catch {
             console.log('already logged in');
             await logout(page);
             await page.goto('https://quizlet.com/create-set', { waitUntil: 'networkidle2' });
@@ -252,6 +258,10 @@ exports.run = async function () {
         await page.click(query.toCorF);
         await page.click(query.selectToFolder);
         await page.click(query.addtoFolder);
+
+        await page.keyboard.press('Escape');
+        await aSleep(1000); // wait for modal extinguish
+
         console.log('added set to folder 워드마스터');
 
         await logout(page);

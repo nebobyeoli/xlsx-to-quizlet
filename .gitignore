@@ -10,6 +10,8 @@ temp*
 *test*/
 test*
 
+terms-uploader/*.png
+
 *.env
 *.txt
 *.xlsx
