@@ -12,7 +12,7 @@
   "scripts": {
     "test": "echo TEST!",
     "build": "node tools/build.js",
-    "head": "node working/headless.js"
+    "head": "node terms-uploader/headless.js"
   },
   "repository": {
     "type": "git",
