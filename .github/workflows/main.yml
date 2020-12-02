@@ -22,8 +22,6 @@ jobs:
       - name: Get set
         run: |
           echo "::set-env name=test_secret::${{secrets.TEST_SECRET}}"
-          echo "::set-env name=QZTID::${{secrets.QZTID}}"
-          echo "::set-env name=QZTPD::${{secrets.QZTPD}}"
 
       - name: Build
         run: |
