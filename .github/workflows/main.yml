@@ -19,10 +19,6 @@ jobs:
         with:
           node-version: '12'
 
-      - name: Get set
-        run: |
-          echo "::set-env name=test_secret::${{secrets.TEST_SECRET}}"
-
       - name: Build
         run: |
           npm ci
