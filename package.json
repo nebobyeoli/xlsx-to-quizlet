@@ -7,7 +7,7 @@
     "puppeteer": "^5.3.1"
   },
   "devDependencies": {
-    "pkg": "^4.4.9"
+    "pkg": "^5.8.1"
   },
   "scripts": {
     "test": "echo TEST!",
