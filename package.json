@@ -4,7 +4,7 @@
   "description": "This is a tryout, I don't know much",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "puppeteer": "^5.3.1"
+    "puppeteer": "^24.37.5"
   },
   "devDependencies": {
     "pkg": "^4.4.9"
